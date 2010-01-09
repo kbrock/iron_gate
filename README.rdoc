@@ -1,0 +1,16 @@
+Put into environment.rb
+#HEROKI has this environment parameter set - which turns on the functionality
+HIDE_WITHOUT_NICE=(ENV['HIDE']=='true')
+
+Put into application_controller
+
+if HIDE_WITHOUT_NICE
+  acts_as_gated :template => 'shared/gate_closed' #decided to create custom urls instead of passing in this way
+end
+
+Put into routes.rb
+if HIDE_WITHOUT_NICE
+  map.nice 'nice2meetcha', :controller => 'iron_gate/gate', :action => 'open'
+  map.notnice 'notnice2meetcha', :controller => 'iron_gate/gate', :action => 'close'
+end
+
